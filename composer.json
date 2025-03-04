@@ -1,5 +1,5 @@
 {
-    "name": "riari/laravel-forum",
+    "name": "selectandstart/laravel-forum",
     "description": "A Laravel package providing a solid foundation for building discussion forums",
     "keywords": [
         "laravel",
@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^11.0",
+        "laravel/framework": "^12.0",
         "kalnoy/nestedset": "^6.0",
         "doctrine/dbal": "^4.0"
     },
