@@ -1,9 +1,9 @@
-FROM php:8.2-cli
+FROM php:8.4-cli
 
-# System dependencies
-RUN apt-get update && apt-get install -y libzip-dev
+# Install PHPUnit
+RUN curl -sS https://phar.phpunit.de/phpunit-9.phar -o /usr/local/bin/phpunit \
+    && chmod +x /usr/local/bin/phpunit
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-# PHP extensions
-RUN docker-php-ext-install pdo_mysql zip exif pcntl
+ENTRYPOINT ["phpunit"]
