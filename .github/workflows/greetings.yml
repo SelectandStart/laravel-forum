@@ -9,6 +9,16 @@ jobs:
       issues: write
       pull-requests: write
     steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up PHP 8.4
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+
+    - name: Install Dependencies
+      run: composer install --prefer-dist --no-progress
+
     - uses: actions/first-interaction@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
