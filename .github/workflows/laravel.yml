@@ -12,14 +12,20 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4  # Ensure code is available first
+        uses: actions/checkout@v4
+
+      - name: Debug: List repository files
+        run: ls -la
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          tools: composer:v2  # Ensure latest Composer version
-      
+          tools: composer:v2
+
+      - name: Debug: Check if composer.json exists
+        run: ls -la composer.json
+
       - name: Copy .env
         run: |
           if [ -f .env.example ]; then
@@ -27,20 +33,26 @@ jobs:
           else
             echo "APP_KEY=" > .env
           fi
-      - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
-      
+
+      - name: Clear Cache & Install Dependencies
+        run: |
+          rm -rf vendor composer.lock
+          composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Debug: Check if artisan exists
+        run: ls -la artisan
+
       - name: Generate Key
         run: php artisan key:generate
-      
+
       - name: Set Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
-      
+
       - name: Create Database
         run: |
           mkdir -p database
           touch database/database.sqlite
-      
+
       - name: Run Tests (PHPUnit/Pest)
         env:
           DB_CONNECTION: sqlite
