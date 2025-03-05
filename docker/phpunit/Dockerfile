@@ -1,9 +1,11 @@
 FROM php:8.4-cli
 
-# Install PHPUnit
-RUN curl -sS https://phar.phpunit.de/phpunit-9.phar -o /usr/local/bin/phpunit \
-    && chmod +x /usr/local/bin/phpunit
+# System dependencies
+RUN apt-get update && apt-get install -y libzip-dev
 
-WORKDIR /app
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["phpunit"]
+# PHP extensions
+RUN docker-php-ext-install zip
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
