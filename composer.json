@@ -3,7 +3,7 @@
     "description": "A Laravel package providing a solid foundation for building discussion forums",
     "keywords": [
         "laravel",
-        "laravel-11",
+        "laravel-12",
         "forum",
         "discuss"
     ],
@@ -19,13 +19,13 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "laravel/framework": "^12.0",
         "kalnoy/nestedset": "^6.0",
         "doctrine/dbal": "^4.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^9.0"
+        "orchestra/testbench": "10.0"
     },
     "autoload": {
         "psr-4": {
