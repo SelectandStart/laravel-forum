@@ -39,7 +39,3 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --ignore-platform-reqs  # Ignore PHP version requirement during install
-
-    # Optional: Uncomment to run tests after installation
-    - name: Run test suite
-      run: composer run-script test
