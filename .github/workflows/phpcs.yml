@@ -13,12 +13,21 @@ jobs:
     name: Run PHP_CodeSniffer
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-    - name: Run PHPCS inspection
-      uses: rtCamp/action-phpcs-code-review@v3
-      env:
-        GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
-        SKIP_FOLDERS: ".github,ui-presets,src/Tests"
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Verify PHP version
+        run: php -v  # Debugging step to ensure PHP 8.4 is active
+
+      - name: Run PHPCS inspection
+        uses: rtCamp/action-phpcs-code-review@v3
+        env:
+          GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
+          SKIP_FOLDERS: ".github,ui-presets,src/Tests"
