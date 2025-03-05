@@ -23,8 +23,8 @@ jobs:
           php-version: '8.4'
           tools: composer:v2
 
-      - name: Debug: Check if composer.json exists
-        run: ls -la composer.json
+      - name: Debug: Ensure Laravel files exist
+        run: ls -la
 
       - name: Copy .env
         run: |
@@ -34,21 +34,27 @@ jobs:
             echo "APP_KEY=" > .env
           fi
 
-      - name: Clear Cache & Install Dependencies
+      - name: Install Dependencies
         run: |
           rm -rf vendor composer.lock
           composer install --prefer-dist --no-progress --no-interaction
 
       - name: Debug: Check if artisan exists
-        run: ls -la artisan
+        run: ls -la
 
-      - name: Generate Key
-        run: php artisan key:generate
+      - name: Generate Application Key
+        run: |
+          if [ -f artisan ]; then
+            php artisan key:generate
+          else
+            echo "Error: artisan file not found!"
+            exit 1
+          fi
 
       - name: Set Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
 
-      - name: Create Database
+      - name: Create SQLite Database
         run: |
           mkdir -p database
           touch database/database.sqlite
@@ -57,4 +63,10 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan test
+        run: |
+          if [ -f artisan ]; then
+            php artisan test
+          else
+            echo "Error: artisan file not found!"
+            exit 1
+          fi
