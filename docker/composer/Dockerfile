@@ -1,14 +1,11 @@
 FROM php:8.4-cli
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    && rm -rf /var/lib/apt/lists/*
+# System dependencies
+RUN apt-get update && apt-get install -y libzip-dev
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+# PHP extensions
+RUN docker-php-ext-install zip
 
-ENTRYPOINT ["composer"]
+COPY --from=composer /usr/bin/composer /usr/bin/composer
