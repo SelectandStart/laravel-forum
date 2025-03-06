@@ -17,6 +17,10 @@ jobs:
       pull-requests: write
 
     steps:
+    - uses: actions/checkout@v4 # Uploads repository content to the runner
+      with:
+        repository: "SelectandStart/laravel-forum" # The one of the available inputs, visit https://github.com/actions/checkout#readme to find more
     - uses: actions/labeler@v5
       with:
+        configuration-path: '.github/label.yml'
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
