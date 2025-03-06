@@ -2,6 +2,8 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, closed]
+permissions:
+ contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,4 +14,3 @@ jobs:
          ref: 6.x
          token: ${{ github.token }}
          fetch-depth: 0
-         
