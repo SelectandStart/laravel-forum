@@ -1,0 +1,15 @@
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, closed]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+         repository: ${{ github.repository }}
+         ref: 6.x
+         token: ${{ github.token }}
+         fetch-depth: 0
+         
